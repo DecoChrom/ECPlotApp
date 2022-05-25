@@ -1,0 +1,43 @@
+{
+    "name": "ec-plotter-app",
+    "version": "1.0.0",
+    "description": "EC Plotter Toolkit App",
+    "main": "js/main.js",
+    "scripts": {
+        "start": "electron .",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dist": "electron-builder"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "build": {
+        "appId": "app-name",
+        "win": {
+            "target": [
+                "portable"
+            ],
+            "requestedExecutionLevel": "requireAdministrator"
+        },
+        "nsis": {
+            "uninstallDisplayName": "downloadClient",
+            "license": "license.txt",
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true
+        },
+        "portable": {
+            "unicode": false,
+            "artifactName": "ec-plotter-app.exe"
+        }
+    },
+    "devDependencies": {
+        "electron": "^11.3.0",
+        "electron-builder": "^22.9.1"
+    },
+    "dependencies": {
+        "jquery": "^3.5.1",
+        "materialize-css": "^1.0.0",
+        "npm": "^7.6.1",
+        "python-shell": "^3.0.0"
+    }
+}

@@ -1,0 +1,67 @@
+$padding: 6px;
+body {
+}
+.container {
+  background: linear-gradient(rgb(230, 230, 230), rgb(238, 238, 238));
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: grid;
+  height: 100%;
+  grid-template-columns: 3;
+  grid-template-rows: 50px 30px auto 30px;
+  grid-template-areas: 
+    "windowheader windowheader windowheader"
+    "menuheader menuheader menuheader"
+    "leftpane midpane rightpane"
+    "footer footer footer";
+  column-gap: 3px;
+  row-gap: 3px;
+
+  }
+  .windowheader {
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    grid-area: windowheader;
+  }
+
+  .menuheader {
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    grid-area: menuheader;
+  }
+
+  .leftpane {
+    margin-left: 5px;
+    grid-area: leftpane;
+  }
+
+  .midpane {
+    margin-left: 5px;
+    grid-area: midpane;
+  }
+
+  .rightpane {
+    margin-left: 5px;
+    grid-area: rightpane;
+  }
+
+  .footer {
+    grid-area: footer;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(248, 248, 248);
+  }
+
+.windowheadertitle {
+  font-family: "Roboto";
+}
+
+.windowclosebutton {
+  float: right;
+}

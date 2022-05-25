@@ -1,0 +1,71 @@
+<div id="swipe-load" class="col s12">
+    <div class="col s12 card blue lighten-5 full-height valign-wrapper">
+        <h5 class="center-align" style="width: 100%">Drag'n'drop design file (*.svg)<br><br>or<br><br>
+            <form id="loadFileForm" action="#" style="width: 100%">
+                <div class="file-field input-field">
+                    <div class="btn" style="float: none">
+                        <span><i class="material-icons right">file_upload</i>Load design</span>
+                        <input id="loadFileBtn" type="file" accept=".svg">
+                        <div class="file-path-wrapper hidden">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+    </div>
+</div>
+
+<div id="swipe-simpleprint" class="col s12">
+    <div class="col s7 card blue lighten-5 full-height valign-wrapper center-align">
+        <div id="svgWindow" class="svg middle">
+            <h6 class="bold">Place your print!</h4>
+        </div>
+    </div>
+    <div class="col s4 offset-s1 card blue lighten-5 full-height ">
+        <h6 class="bold">Substrate Dimensions</h6>
+        <div class="row">
+            <div class="input-field col s4">
+                <input id="substrate_width" type="number" min="10" />
+                <label for="substrate_width">Width (mm)</label>
+            </div>
+
+            <div class="input-field col s4">
+                <input id="substrate_height" type="number" min="10" />
+                <label for="substrate_height">Height (mm)</label>
+            </div>
+            <div class="input-field col s4">
+                <input id="substrate_thickness" type="number" value="0.015" />
+                <label for="substrate_thickness">Thickness (mm)</label>
+            </div>
+        </div>
+        <a id="set_substrate_dimensions" class="waves-effect waves-light btn">Set</a>
+        <a id="change_substrate_orientation" class="waves-effect waves-light btn"><i class="material-icons left">rotate_right</i>Orientation</a><br><br>
+
+        <br>
+        <h6 class="bold">Print Position</h6>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="print_pos_x" type="number" value="0" step="0.1" />
+                <label for="print_pos_x">X axis (mm)</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="print_pos_y" type="number" value="0" step="0.1" />
+                <label for="print_pos_y">Y axis (mm)</label>
+            </div>
+        </div>
+
+
+        <h6 class="bold">Add Electronic Connectors</h6>
+        <a id="addConnectionsS" class="waves-effect waves-light btn">Standard</a>
+        <a id="addConnectionsL" class="waves-effect waves-light btn">Large</a>
+        <br><br>
+
+        <h6 class="bold">Print File</h6>
+        <a id="exportEC" class="waves-effect waves-light btn">Electrochromic</a>
+        <a id="exportAG" class="waves-effect waves-light btn">Conductive</a>
+        <a id="exportEL" class="waves-effect waves-light btn">Electrolyte</a>
+        <a id="exportAll" class="waves-effect waves-light btn">Create</a>
+
+    </div>
+</div>

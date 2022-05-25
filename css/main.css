@@ -1,0 +1,62 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+#svgWindow {
+    flex: 1
+}
+
+.full-height {
+    padding-top: 0.75rem !important;
+    min-height: calc(100vh - 140px) !important
+}
+
+#status-bar {
+    padding-left: 5px;
+}
+
+.h6 {
+    font-size: 1.15rem;
+    line-height: 110%;
+}
+
+label {
+    font-size: 1.15rem;
+    line-height: 110%;
+    padding-right: 1rem;
+    color: black;
+}
+
+.top-padding {
+    padding-top: 0.75rem !important;
+}
+
+.bottom-padding {
+    padding-bottom: 0.75rem !important;
+}
+
+#mainAG {
+    text-align: center;
+}
+
+#mainEC {
+    text-align: center;
+}
+
+#mainEL {
+    text-align: center;
+}
+
+.center-align {
+    text-align: center;
+}
+
+.small-text {
+    font-size: 0.8rem !important;
+}

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base href="./">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://fonts.googleapis.com https://code.jquery.com"> -->
+    <title>EC Plotter Toolkit App</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body>
+    <header>
+        <nav class="nav-extended">
+            <div class="nav-content">
+                <ul id="tabs" class="tabs tabs-transparent">
+                    <!-- <li class="tab"><a href="#swipe-load">Load SVG</a></li> -->
+                    <li class="tab"><a class="active" href="#swipe-simpleprint">Placement</a></li>
+                    <li class="tab"><a href="#swipe-intro">Load File</a></li>
+                    <li class="tab"><a href="#swipe-print">Settings</a></li>
+                    <li class="tab"><a href="#swipe-gcode">GCode Viewer</a></li>
+                    <li id="agTab" class="tab"><a href="#swipe-ag">Conductive Layer (AG)</a></li>
+                    <li id="ecTab" class="tab"><a href="#swipe-ec">Electrochromic Layer (EC)</a></li>
+                    <li id="elTab" class="tab"><a href="#swipe-el">Electrolyte Layer (EL)</a></li>
+                    <li id="comTab" class="tab"><a href="#swipe-com">Combined Design</a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+    <main>
+        <div class="row">
+            <div id="swipe-simpleprint" class="col s12">
+                <div class="col s7 card blue lighten-5 full-height valign-wrapper center-align">
+                    <div id="svgWindow" class="svg middle">
+                        <h6 class="bold">Place your print!</h4>
+                    </div>
+                </div>
+                <div class="col s4 offset-s1 card blue lighten-5 full-height ">
+                    <h6 class="bold">Substrate Dimensions</h6>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <input id="substrate_width" type="number" min="10" />
+                            <label for="substrate_width">Width (mm)</label>
+                        </div>
+
+                        <div class="input-field col s4">
+                            <input id="substrate_height" type="number" min="10" />
+                            <label for="substrate_height">Height (mm)</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <input id="substrate_thickness" type="number" value="0.015" />
+                            <label for="substrate_thickness">Thickness (mm)</label>
+                        </div>
+                        <div class="input-field col s4">
+                            <select name="substrate_type">
+                              <option value="1">Non Porous</option>
+                              <option value="2">Porous</option>
+                            </select>
+                            <label for="substrate_type">Substrate Type:</label>
+                            <!-- <label>Materialize Select</label> -->
+                        </div>
+                    </div>
+                    <div clas="col s4">
+                        <a id="set_substrate_dimensions" class="waves-effect waves-light btn">Set</a>
+                        <a id="change_substrate_orientation" class="waves-effect waves-light btn"><i class="material-icons left">rotate_right</i>Orientation</a><br><br>
+                    </div>
+                    <br>
+
+                    <h6 class="bold">Print Position</h6>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="print_pos_x" type="number" value="0" step="0.1" />
+                            <label for="print_pos_x">X axis (mm)</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="print_pos_y" type="number" value="0" step="0.1" />
+                            <label for="print_pos_y">Y axis (mm)</label>
+                        </div>
+                    </div>
+
+
+                    <h6 class="bold">Add Electronic Connectors</h6>
+                    <a id="addConnectionsS" class="waves-effect waves-light btn">Standard</a>
+                    <a id="addConnectionsL" class="waves-effect waves-light btn">Large</a>
+                    <br><br>
+
+                    <h6 class="bold">Print File</h6>
+                    <a id="exportEC" class="waves-effect waves-light btn">Electrochromic</a>
+                    <a id="exportAG" class="waves-effect waves-light btn">Conductive</a>
+                    <a id="exportEL" class="waves-effect waves-light btn">Electrolyte</a>
+                    <a id="exportAll" class="waves-effect waves-light btn">Create</a>
+
+                </div>
+            </div>
+
+            <div id="swipe-intro" class="col s12">
+                <br>
+                <div id="file-drop-div" class="col s8 offset-s2 card blue lighten-5 full-height valign-wrapper">
+                    <h5 class="center-align" style="width: 100%">Drag'n'drop files (*.svg)<br><br>or<br><br>
+                        <button id="loadFileBtn" class="btn waves-effect waves-light"><i
+                                class="material-icons right">file_upload</i>Load files</button>
+                        <br /><br /><br />
+                        <span class="center-align h6">The toolkit looks for files with _AG, _EC and _EL in the filename
+                            for
+                            each of the layers. <br />Please ensure the files contain these.</span>
+                    </h5>
+
+                    <br>
+
+                </div>
+            </div>
+
+            <div id="swipe-print" class="col s12"> <br>
+                <div class="col s2 offset-s1 card blue lighten-5 full-height">
+                    <h5>General: </h5>
+                    <div class="divider"></div>
+                    <h6 id="substrate-label">Substrate Thickness: </h6>
+                    <form action="#">
+                        <p class="range-field">
+                            <input type="range" id="substrate-thickness" min="0.00" max="10.0" step="0.01" />
+                        </p>
+                    </form>
+                    <div class="divider"></div>
+                    <h5>Generate: </h5>
+                    <h6>Conductive Layer (AG): </h6><br>
+                    <center>
+                        <a class="btn center-align" id="agGenerateSTL">STL</a>
+                        <a class="btn center-align" id="agGenerateGCode">GCode</a>
+                        <form action="#">
+                            <p>
+                                <label>
+                                    <input id="ag-cure" type="checkbox"/>
+                                    <span>Cure Pass</span>
+                                    </label>
+                            </p>
+                        </form>
+
+                    </center>
+                    <h6>Electrochomic Layer (EC): </h6><br>
+                    <center>
+                        <a class="btn center-align" id="ecGenerateSTL">STL</a>
+                        <a class="btn center-align" id="ecGenerateGCode">GCode</a>
+                        <form action="#">
+                            <p>
+                                <label>
+                                    <input id="ec-cure" type="checkbox"/>
+                                    <span>Cure Pass</span>
+                                    </label>
+                            </p>
+                        </form>
+                    </center>
+                    <h6>Electrolyte Layer (EL): </h6><br>
+                    <center>
+                        <a class="btn center-align" id="elGenerateSTL">STL</a>
+                        <a class="btn center-align" id="elGenerateGCode">GCode</a>
+                        <form action="#">
+                            <p>
+                                <label>
+                                    <input id="el-cure" type="checkbox"/>
+                                    <span>Cure Pass</span>
+                                    </label>
+                            </p>
+                        </form>
+
+                    </center>
+                    <div class="divider"></div><br>
+                    <center>
+                        <a class="btn center-align" id="generateAll">Generate All</a><br/><br/>
+                        <!-- <a class="btn center-align" id="openFolder">Open Data Folder</a><br/> -->
+                    </center>
+                </div>
+
+                <div class="col s3 offset-s1 card blue lighten-5 full-height">
+                    <h5>Conductive Layer: </h5>
+                    <div class="divider"></div>
+                    <form action="#">
+                        <p class="range-field">
+                            <label style="padding-right: 0px">Syringe Diameter: </label><label id="ag-syringe-diameter-label"></label>
+                            <input style="width: auto; clear: both; float: right" type="range" id="ag-syringe-diameter" min="1.0" max="10.0" step="0.1" />
+                        </p>
+                    </form>
+                    <div class="divider"></div>
+                    <form action="#">
+                        <p class="range-field">
+                            <label style="padding-right: 0px">Tip Diameter: </label><label id="ag-line-width-label"></label>
+                            <input style="width: auto; clear: both; float: right" type="range" id="ag-line-width" min="0.1" max="3.0" step="0.1" />
+                        </p>
+                    </form>
+                    <div class="divider"></div>
+                    <form action="#">
+                        <p class="range-field">
+                            <label style="padding-right: 0px">Flow Multiplier: </label><label id="ag-multiplier-label"></label>
+                            <input style="width: auto; clear:both; float: right" type="range" id="ag-multiplier" min="0.1" max="1.5" step="0.01" />
+                        </p>
+                    </form>
+                    <br/>
+                    <h5>Electrochromic Layer: </h5>
+                    <form action="#">
+                        <p class="range-field">
+                            <label style="padding-right: 0px">Syringe Diameter: </label><label id="ec-syringe-diameter-label"></label>
+                            <input style="width: auto; clear: both; float: right" type="range" id="ec-syringe-diameter" min="1.0" max="10.0" step="0.1" />
+                        </p>
+                    </form>
+                    <div class="divider"></div>
+                    <form action="#">
+                        <p class="range-field">
+                            <label style="padding-right: 0px">Tip Diameter: </label><label id="ec-line-width-label"></label>
+                            <input style="width: auto; clear: both; float: right" type="range" id="ec-line-width" min="0.1" max="3.0" step="0.1" />
+                        </p>
+                    </form>
+                    <div class="divider"></div>
+                    <form action="#">
+                        <p class="range-field">
+                            <label style="padding-right: 0px">Flow Multiplier: </label><label id="ec-multiplier-label"></label>
+                            <input style="width: auto; clear:both; float: right" type="range" id="ec-multiplier" min="0.1" max="1.5" step="0.01" />
+                        </p>
+                    </form>
+                </div>
+                <div class="col s3 offset-s1 card blue lighten-5 full-height">
+                    <h5>Electrolyte Layer: </h5>
+                    <form action="#">
+                        <p class="range-field">
+                            <label style="padding-right: 0px">Syringe Diameter: </label><label id="el-syringe-diameter-label"></label>
+                            <input style="width: auto; clear: both; float: right" type="range" id="el-syringe-diameter" min="1.0" max="10.0" step="0.1" />
+                        </p>
+                    </form>
+                    <div class="divider"></div>
+                    <form action="#">
+                        <p class="range-field">
+                            <label style="padding-right: 0px">Tip Diameter: </label><label id="el-line-width-label"></label>
+                            <input style="width: auto; clear: both; float: right" type="range" id="el-line-width" min="0.1" max="3.0" step="0.1" />
+                        </p>
+                    </form>
+                    <div class="divider"></div>
+                    <form action="#">
+                        <p class="range-field">
+                            <label style="padding-right: 0px">Flow Multiplier: </label><label id="el-multiplier-label"></label>
+                            <input style="width: auto; clear:both; float: right" type="range" id="el-multiplier" min="0.1" max="1.5" step="0.01" />
+                        </p>
+                    </form>
+                    <center>
+                        <br/><br/>
+                        <a class="btn center-align" id="openFolder">Open Data Folder</a><br/><br/>
+                        <a class="btn center-align" id="openSettingsFolder">Open Settings Folder</a><br/>
+                    </center>
+
+                </div>
+
+            </div>
+
+            <div id="swipe-gcode" class="col s12"> <br>
+                <div class="col s10 offset-s1 card blue lighten-5 full-height center-align">
+                    <a class="btn" id="btnAGGcode">AG Layer</a>
+                    <a class="btn" id="btnECGcode">EC Layer</a>
+                    <a class="btn" id="btnELGcode">EL Layer</a>
+                    <a class="btn" id="btnComGcode">Combined</a><br/><br/>
+                    <div id="gcodeRenderer"></div>
+                </div>
+            </div>
+
+
+            <div id="swipe-ag" class="col s12"> <br>
+                <div class="col s6 offset-s1 card blue lighten-5 full-height top-padding bottom-padding" id="mainAG">Main</div>
+                <div class="col s3 offset-s1 card blue lighten-5 bottom-padding">
+                    <!-- <h5>Options: </h5>
+        <div class="divider"></div>
+        <h6 id="ag-syringe-diameter-label">Syringe Diameter: </h6>
+        <span class="small-text">Used to adjust feedrate of ink. <br/>Lower = more ink, Higher = less ink<br><br></span>
+        <form action="#">
+            <p class="range-field">
+                <input type="range" id="ag-syringe-diameter" min="1.0" max="10.0" step="0.1" />
+            </p>
+        </form>
+        <div class="divider"></div>
+        <h6 id="ag-line-width-label">Line Width:</h6>
+        <span class="small-text">Adjust this to increase or lower line overlap.<br></span>
+        <form action="#">
+            <p class="range-field">
+                <input type="range" id="ag-line-width" min="0.1" max="3.0" step="0.1" />
+            </p>
+        </form>
+        <div class="divider"></div><br>
+        <center>
+            <a class="btn center-align" id="agGenerateSTL">Generate STL</a>
+            <a class="btn center-align" id="agGenerateGCode">Generate GCode</a><br/><br/>
+            <a class="btn center-align" id="agGenerateAll">Generate All</a>
+        </center> -->
+                </div>
+            </div>
+
+            <div id="swipe-ec" class="col s12"> <br>
+                <div class="col s6 offset-s1 card blue lighten-5 full-height top-padding" id="mainEC">Main</div>
+                <div class="col s3 offset-s1 card blue lighten-5 full-height">Options</div>
+            </div>
+
+            <div id="swipe-el" class="col s12"> <br>
+                <div class="col s6 offset-s1 card blue lighten-5 full-height top-padding" id="mainEL">Main</div>
+                <div class="col s3 offset-s1 card blue lighten-5 full-height">Options</div>
+            </div>
+
+
+            <div id="swipe-com" class="col s12"> <br>
+                <div class="col s10 offset-s1 card blue lighten-5 full-height">Main</div>
+            </div>
+        </div>
+    </main>
+
+
+    <!--<footer>
+        <div class="footer-copyright orange">
+            <span id="status-bar">Status:</span>
+        </div>
+    </footer>-->
+
+
+    <script>
+        if (typeof module === 'object') {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/materialize.js"></script>
+
+    <!--GCode viewer related scripts-->
+    <script type="module" src="js/gcodeviewer/three-gcode.js"></script>
+
+    <!-- SVG.js -->
+    <script type="text/javascript" src="js/svg/svg.min.js"></script>
+    <script type="text/javascript" src="js/svg/svg.draggable.js"></script>
+
+    <!--Own custom app scripts-->
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+    <script type="text/javascript" src="js/hooks.js"></script>
+    <script type="text/javascript" src="js/svgprint.js"></script>
+
+
+
+
+    <script>
+        if (window.module) module = window.module;
+    </script>
+
+</body>
+
+</html>
